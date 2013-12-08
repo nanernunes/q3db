@@ -14,7 +14,7 @@ class QuakeEntry
 
 
       # 33:17 Kill: 1 0 7: Daemia killed Xaero by MOD_ROCKET_SPLASH
-      when /(\d+:\d+)[ ]?Kill: (\d+) (\d+) (\d+): (.*) killed (.*) by (.*)/
+      when /(\d+:\d+)[ ]?Kill: (\d+) (\d+) (\d+): (.*) killed (.*) by (\w+)$/
 
 	Client.where({:match_id => Match.last.id, :session_id => $2, :nickname => $5})
 	  .first_or_create if $5.eql?("<world>")
@@ -92,7 +92,7 @@ class QuakeEntry
 
 
       # 0:00 Item: 0 weapon_shotgun
-      when /(\d+:\d+)[ ]?Item: (\d+) (.*)/
+      when /(\d+:\d+)[ ]?Item: (\d+) (\w+)$/
 	Supply.create ({
 	  :match_id   => Match.last.id,
 	 #:elapsed    => $1,
