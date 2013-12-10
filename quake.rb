@@ -48,10 +48,11 @@ while true
   unless (file.mtime.to_i.eql?(mtime))
 
     file.seek fsize
-    file.each_line.map { |e| QuakeEntry.new(e) }
+    lines = file.each_line.take_while { |l| l.match(/\n/) }
+    lines.map { |e| QuakeEntry.new(e) }
 
-    Commit.create ({ 
-      :fsize => file.size,
+    Commit.create ({
+      :fsize => lines.join.size,
       :mtime => file.mtime.to_i
     })
 
