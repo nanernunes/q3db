@@ -21,7 +21,7 @@ class QuakeEntry
 
 	Score.create ({
 	  :match_id   => Match.last.id,
-	  #:elapsed    => $1,
+	  :elapsed    => $1.to_quakeseconds,
 	  :killer_id  => Client.where(:match_id => Match.last.id, :session_id => $2).last.id,
 	  :killed_id  => Client.where(:match_id => Match.last.id, :session_id => $3).last.id,
 	  :weapon_id  => Weapon.where(:weapon => $7, :id => $4).first_or_create.id
@@ -36,8 +36,16 @@ class QuakeEntry
 	Client.where(:match_id => Match.last.id).map(&:nickname).uniq.compact.each do |n|
 
 	  if ($2.start_with?(n))
-	    Chat.create ({:match_id => Match.last.id, :nickname => n, :message => $2.split("#{n}: ", 2).last})
+
+	    Chat.create ({
+	      :elapsed  => $1.to_quakeseconds,
+	      :match_id => Match.last.id,
+	      :nickname => n,
+	      :message  => $2.split("#{n}: ", 2).last
+	    })
+
 	    break
+
 	  end
 
 	end
@@ -53,7 +61,7 @@ class QuakeEntry
       when /(\d+:\d+)[ ]?ClientConnect: (\d+)/
 	Client.create ({
 	  :match_id   => Match.last.id,
-	 #:elapsed    => $1,
+	  :elapsed    => $1.to_quakeseconds,
 	  :session_id => $2
 	})
 
@@ -67,10 +75,11 @@ class QuakeEntry
 
 	Client.update(
 	  Client.where(:match_id => Match.last.id, :session_id => $2).last.id, {
-	   #:elapsed    => $1,
+	    :elapsed    => $1.to_quakeseconds,
 	    :nickname   => client_info["n"],
 	    :model      => client_info["model"]
-	  })
+	  }
+	)
 
 
       # 0:00 ClientBegin: 0
@@ -95,7 +104,7 @@ class QuakeEntry
       when /(\d+:\d+)[ ]?Item: (\d+) (\w+)$/
 	Supply.create ({
 	  :match_id   => Match.last.id,
-	 #:elapsed    => $1,
+	  :elapsed    => $1.to_quakeseconds,
 	  :client_id  => Client.where(:match_id => Match.last.id, :session_id => $2).last.id,
 	  :item_id    => Item.where(:item => $3).first_or_create.id
 	})

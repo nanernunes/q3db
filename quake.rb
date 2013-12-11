@@ -52,7 +52,7 @@ while true
     lines.map { |e| QuakeEntry.new(e) }
 
     Commit.create ({
-      :fsize => lines.join.size,
+      :fsize => lines.join.size + fsize,
       :mtime => file.mtime.to_i
     })
 

@@ -1,6 +1,7 @@
 class CreateSupplies < ActiveRecord::Migration
   def change
     create_table :supplies do |t|
+      t.integer :elapsed
       t.references :match
       t.references :client
       t.references :item
