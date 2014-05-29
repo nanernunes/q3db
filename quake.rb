@@ -20,17 +20,7 @@ Rake::Task['db:migrate'].invoke
 $counter = QuakeCount.new
 
 # Creates the Database references
-class Arena  < ActiveRecord::Base; end
-class Match  < ActiveRecord::Base; end
-class Client < ActiveRecord::Base; end
-class Chat   < ActiveRecord::Base; end  
-class Model  < ActiveRecord::Base; end
-class Weapon < ActiveRecord::Base; end
-class Item   < ActiveRecord::Base; end
-class Supply < ActiveRecord::Base; end  
-class Score  < ActiveRecord::Base; end
-class Player < ActiveRecord::Base; end
-class Commit < ActiveRecord::Base; end
+
 
 # Sets the log file to be monitored
 file = File.open ARGV[0]

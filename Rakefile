@@ -15,7 +15,7 @@ namespace :db do
 
   # Only to be possible run [ rake db:task ] outside the application.
   task :environment do
-    ActiveRecord::Base.establish_connection( YAML::load( File.open('config/database.yml') )['default'] )
+    ActiveRecord::Base.establish_connection( YAML::load( File.open('config/database.yml') )[ ENV["RAILS_ENV"] ||= 'default'] )
   end
 
 end
