@@ -20,7 +20,8 @@ Rake::Task['db:migrate'].invoke
 $counter = QuakeCount.new
 
 # Creates the Database references
-
+Dir.glob File.join(File.dirname(__FILE__),'app','models','*'),
+  &method(:require)
 
 # Sets the log file to be monitored
 file = File.open ARGV[0]
