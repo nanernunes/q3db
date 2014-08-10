@@ -3,6 +3,8 @@ require 'active_record'
 
 namespace :db do
 
+  ActiveRecord::Migration.verbose = false
+
   desc "Migrate the database schema through db/migrate files."
   task :migrate => :environment do
     ActiveRecord::Migrator.migrate('db/migrate', ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
@@ -15,7 +17,8 @@ namespace :db do
 
   # Only to be possible run [ rake db:task ] outside the application.
   task :environment do
-    ActiveRecord::Base.establish_connection( YAML::load( File.open('config/database.yml') )[ ENV["RAILS_ENV"] ||= 'default'] )
+    ActiveRecord::Base.establish_connection (
+      YAML::load( File.open('config/database.yml') )[ ENV["RAKE_ENV"] ||= 'production'] )
   end
 
 end

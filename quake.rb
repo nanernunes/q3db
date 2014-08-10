@@ -1,14 +1,15 @@
 #!/usr/bin/env ruby
+$LOAD_PATH.unshift( File.join 'lib' )
 
 require 'rake'
 require 'yaml'
 require 'active_record'
-require_relative 'lib/quakeentry'
-require_relative 'lib/quakecount'
+require 'quakeentry'
+require 'quakecount'
 
 # Establish the database connection
 ActiveRecord::Base.establish_connection(
-  YAML::load( File.open('config/database.yml') )['default']
+  YAML::load( File.open('config/database.yml') )['production']
 )
 
 # Invoke the rake db:migrate
