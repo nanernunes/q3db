@@ -17,9 +17,6 @@ Rake.application.init
 Rake.application.load_rakefile
 Rake::Task['db:migrate'].invoke
 
-# Creates a global counter
-$counter = QuakeCount.new
-
 # Creates the Database references
 Dir.glob File.join(File.dirname(__FILE__),'app','models','*'),
   &method(:require)
