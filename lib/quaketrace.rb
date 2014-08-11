@@ -44,9 +44,4 @@ class String
   def bold;           "\e[1m#{self}\e[22m" end
   def reverse_color;  "\e[7m#{self}\e[27m" end
     
-  def to_quakeseconds
-    min, sec = self.split(':').map(&:to_i)
-    ((min * 60) + sec)
-  end
-
 end

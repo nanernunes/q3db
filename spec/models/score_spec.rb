@@ -1,6 +1,4 @@
-require 'spec_helper'
 require 'quakeentry'
-require 'quaketrace'
 require 'match'
 require 'client'
 require 'weapon'
