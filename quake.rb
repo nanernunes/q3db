@@ -4,6 +4,8 @@ $LOAD_PATH.unshift( File.join 'lib' )
 require 'rake'
 require 'yaml'
 require 'active_record'
+# Opened an issue to rename it to a short version.
+require 'rails/observers/activerecord/active_record'
 require 'quakeentry'
 require 'quakecount'
 
@@ -17,9 +19,15 @@ Rake.application.init
 Rake.application.load_rakefile
 Rake::Task['db:migrate'].invoke
 
+# Creates a global counter
+$counter = QuakeCount.new
+
 # Creates the Database references
 Dir.glob File.join(File.dirname(__FILE__),'app','models','*'),
   &method(:require)
+
+ActiveRecord::Base.add_observer PersistenceObserver.instance
+
 
 # Sets the log file to be monitored
 file = File.open ARGV[0]

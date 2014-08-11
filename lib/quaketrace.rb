@@ -2,6 +2,7 @@ class QuakeTrace
 
   def initialize(counter)
     @counter = counter
+    puts if @counter.joins.zero?
   end
 
   def notice
