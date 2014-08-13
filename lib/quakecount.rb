@@ -1,12 +1,9 @@
 class QuakeCount
+  include Singleton
 
-  attr_accessor :joins, :items, :chats, :kills
+  attr_reader :joins, :items, :chats, :kills
 
-  def initialize
-    self.init
-  end
-
-  def init
+  def startup
     @joins = @items = @chats = @kills = 0
   end
 
