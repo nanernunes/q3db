@@ -1,6 +1,14 @@
 require 'yaml'
 require 'active_record'
 
+Rake::TaskManager.record_task_metadata = true
+
+task :default do
+  Rake::application.options.show_tasks = :tasks
+  Rake::application.options.show_task_pattern = //
+  Rake::application.display_tasks_and_comments
+end
+
 namespace :db do
 
   ActiveRecord::Migration.verbose = false
