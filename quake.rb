@@ -20,8 +20,8 @@ Rake.application.load_rakefile
 Rake::Task['db:migrate'].invoke
 
 # Creates the Database references
-Dir.glob File.join(File.dirname(__FILE__),'app','models','*'),
-  &method(:require)
+Dir.glob( File.join File.dirname(__FILE__),'app','models','**/*.rb' )
+  .sort_by { |file| file.count "/" }.each { |file| require file }
 
 ActiveRecord::Base.add_observer PersistenceObserver.instance
 
