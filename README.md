@@ -1,4 +1,4 @@
-Q3DB
+Q3DB ~ Quake3 to DataBase [![Build Status](https://travis-ci.org/nanernunes/q3db.svg?branch=master)](https://travis-ci.org/nanernunes/q3db)
 ====
 
 Quake 3 DataBase
