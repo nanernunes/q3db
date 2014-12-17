@@ -1,12 +1,16 @@
 require 'yaml'
 require 'active_record'
 
-Rake::TaskManager.record_task_metadata = true
+begin
+  require 'rspec/core/rake_task'
 
-task :default do
-  Rake::application.options.show_tasks = :tasks
-  Rake::application.options.show_task_pattern = //
-  Rake::application.display_tasks_and_comments
+  RSpec::Core::RakeTask.new(:spec) do |t|
+    t.verbose    = false
+    t.rspec_opts = "-fp"
+  end
+
+  task :default => :spec
+rescue LoadError
 end
 
 namespace :db do
