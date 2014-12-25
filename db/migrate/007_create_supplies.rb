@@ -6,7 +6,7 @@ class CreateSupplies < ActiveRecord::Migration
       t.references :client
       t.references :item
 
-      t.timestamps
+      t.timestamps :null => false
     end
     add_index :supplies, :match_id
     add_index :supplies, :client_id

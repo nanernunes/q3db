@@ -30,7 +30,7 @@ class CreateMatches < ActiveRecord::Migration
       t.string :CPU
       t.string :mappack
 
-      t.timestamps
+      t.timestamps :null => false
     end
   end
 end

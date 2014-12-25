@@ -6,7 +6,7 @@ class CreateChats < ActiveRecord::Migration
       t.string :nickname
       t.text :message
 
-      t.timestamps
+      t.timestamps :null => false
     end
     add_index :chats, :match_id
   end

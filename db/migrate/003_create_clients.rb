@@ -7,7 +7,7 @@ class CreateClients < ActiveRecord::Migration
       t.string :nickname
       t.string :model
 
-      t.timestamps
+      t.timestamps :null => false
     end
     add_index :clients, :match_id
   end
