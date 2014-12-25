@@ -4,9 +4,7 @@ require 'quakecolor'
 
 module QuakeTrace
 
-  def self.notice counter
-
-    puts if counter.joins.zero?
+  def self.notice(counter)
 
     print ERB.new( File.read(
       File.join('app', 'views', 'trace', 'trace.erb')
