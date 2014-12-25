@@ -1,0 +1,6 @@
+<%= "\r#{I18n.t(:match)}: [ ".bold %>
+<%= I18n.t(:joins) %>: <%= joins.to_s.rjust(2, '0').green %> - 
+<%= I18n.t(:items) %>: <%= items.to_s.rjust(4, '0').blue %> - 
+<%= I18n.t(:chats) %>: <%= chats.to_s.rjust(3, '0').yellow %> - 
+<%= I18n.t(:kills) %>: <%= kills.to_s.rjust(3, '0').red %> 
+<%= "]".bold %>
