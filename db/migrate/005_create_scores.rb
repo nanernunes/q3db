@@ -7,7 +7,7 @@ class CreateScores < ActiveRecord::Migration
       t.integer :killed_id
       t.references :weapon
 
-      t.timestamps
+      t.timestamps :null => false
     end
     add_index :scores, :match_id
     add_index :scores, :weapon_id

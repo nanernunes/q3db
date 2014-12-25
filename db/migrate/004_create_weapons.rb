@@ -3,7 +3,7 @@ class CreateWeapons < ActiveRecord::Migration
     create_table :weapons do |t|
       t.string :weapon
 
-      t.timestamps
+      t.timestamps :null => false
     end
   end
 end

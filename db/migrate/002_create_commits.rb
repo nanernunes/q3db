@@ -4,7 +4,7 @@ class CreateCommits < ActiveRecord::Migration
       t.integer :fsize
       t.integer :mtime
 
-      t.timestamps
+      t.timestamps :null => false
     end
   end
 end
