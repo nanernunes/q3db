@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 $LOAD_PATH.unshift( File.join 'lib' )
 
+require 'i18n'
 require 'rake'
 require 'yaml'
 require 'active_record'
@@ -8,6 +9,11 @@ require 'active_record'
 require 'rails/observers/activerecord/active_record'
 require 'quakeentry'
 require 'quakecount'
+
+# Load all available locales and makes the English the default
+I18n.load_path = Dir[ File.join('config','locales','*.yml') ]
+I18n.backend.load_translations
+I18n.locale = :en
 
 # Establish the database connection
 ActiveRecord::Base.establish_connection(
