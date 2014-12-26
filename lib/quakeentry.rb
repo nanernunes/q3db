@@ -8,7 +8,7 @@ class QuakeEntry
       when /(\d+:\d+)[ ]?InitGame: \\(.*)/
         create_match $1, $2
 
-      # 33:17 Kill: 1 0 7: Daemia killed Xaero by MOD_ROCKET_SPLASH
+      # 3:17 Kill: 1 0 7: Daemia killed Xaero by MOD_ROCKET_SPLASH
       when /(\d+:\d+)[ ]?Kill: (\d+) (\d+) (\d+): (.*) killed (.*) by (\w+)$/
         create_kill $1, $2, $3, $4, $5, $6, $7
 
@@ -16,37 +16,26 @@ class QuakeEntry
       when /(\d+:\d+)[ ]?say: (.*)/
         create_chat $1, $2
 
-      # 3:52 score: 0  ping: 48  client: 2 ^9OVERFLOW^2-AF
-      when /(\d+:\d+)[ ]?score: (\d+)  ping: (\d+)  client: (\d+) (.*)/
-
       # 0:00 ClientConnect: 0
       when /(\d+:\d+)[ ]?ClientConnect: (\d+)/
         create_client $1, $2
 
-      # 0:00 ClientUserinfoChanged: 2 n\^9IFMATCH^2-BR\t\0\model\bones/bones\hmodel\sarge\g_redteam\\g_blueteam\\c1\4\c2\5\hc\100\w\0\l\0\tt\0\tl\0
+      # 0:00 ClientUserinfoChanged: 2 n\^9IFMATCH^2-BR\t\0\model\bones/bones\...tt\0\tl\0
       when /(\d+:\d+)[ ]?ClientUserinfoChanged: (\d+) (.*\d)$/
         update_client $1, $2, $3
-
-      # 0:00 ClientBegin: 0
-      when /(\d+:\d+)[ ]?ClientBegin: (\d+)/
-       #Client.update (
-       #  Client.where(:match_id => Match.last.id, :session_id => $2).last.id,
-       #  :elapsed    => $1,
-       #  :through    => true
-       #)
-
-      # 0:00 ClientDisconnect: 0
-      when /(\d+:\d+)[ ]?ClientDisconnect: (\d+)/
-       #Client.update (
-        #  Client.where(:match_id => Match.last.id, :session_id => $2).last.id,
-       #  :elapsed    => $1,
-       #  :through    => false
-       #)
-
 
       # 0:00 Item: 0 weapon_shotgun
       when /(\d+:\d+)[ ]?Item: (\d+) (\w+)$/
         create_supply $1, $2, $3
+
+      # 0:00 ClientBegin: 0
+      when /(\d+:\d+)[ ]?ClientBegin: (\d+)/
+
+      # 0:00 ClientDisconnect: 0
+      when /(\d+:\d+)[ ]?ClientDisconnect: (\d+)/
+
+      # 3:52 score: 0  ping: 48  client: 2 ^9OVERFLOW^2-AF
+      when /(\d+:\d+)[ ]?score: (\d+)  ping: (\d+)  client: (\d+) (.*)/
 
     end
 
