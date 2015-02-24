@@ -3,13 +3,14 @@ require 'match'
 require 'client'
 require 'weapon'
 require 'score'
+require 'stat'
 
 describe Score do
 
   before :each do
     Match.create
-    QuakeEntry.new '0:01 ClientConnect: 0'
-    QuakeEntry.new '0:02 ClientConnect: 1'
+    Q3DB::QuakeEntry.new '0:01 ClientConnect: 0'
+    Q3DB::QuakeEntry.new '0:02 ClientConnect: 1'
   end
 
   after :each do
@@ -20,7 +21,7 @@ describe Score do
   end
 
   it "should create a score for a player" do
-    QuakeEntry.new ( '33:17 Kill: 1 0 0: Daemia killed Xaero by MOD_SHOTGUN' )
+    Q3DB::QuakeEntry.new ( '33:17 Kill: 1 0 0: Daemia killed Xaero by MOD_SHOTGUN' )
 
     @score = Score.last
 
@@ -30,12 +31,12 @@ describe Score do
   end
 
   it "should create a client to <world> events" do
-    QuakeEntry.new ( '5:20 Kill: 1022 1 16: <world> killed Xaero by MOD_LAVA' )
+    Q3DB::QuakeEntry.new ( '5:20 Kill: 1022 1 16: <world> killed Xaero by MOD_LAVA' )
     expect( Client.where(:nickname => '<world>').last.session_id ).to be_eql 1022
   end
 
   it "should create a new weapon when it doesn't exists" do
-    QuakeEntry.new ( '5:20 Kill: 1022 1 16: <world> killed Xaero by MOD_LAVA' )
+    Q3DB::QuakeEntry.new ( '5:20 Kill: 1022 1 16: <world> killed Xaero by MOD_LAVA' )
     expect( Weapon.where(:weapon => 'MOD_LAVA').count ).to be_eql 1
   end
 

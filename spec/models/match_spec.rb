@@ -13,7 +13,7 @@ describe Match do
   end
 
   it "should parse a match by regex" do
-    QuakeEntry.new (
+    Q3DB::QuakeEntry.new (
       '0:00 InitGame: \sv_hostname\QUAKE EXTREME BRASIL
       \sv_minRate\0\sv_maxRate\10000\sv_dlRate\100\sv_minPing\0
       \sv_maxPing\0\sv_floodProtect\1\dmflags\0\fraglimit\20\timelimit\0

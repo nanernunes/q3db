@@ -9,6 +9,7 @@ require 'active_record'
 require 'rails/observers/activerecord/active_record'
 require 'quakeentry'
 require 'quakecount'
+require 'quake_main'
 
 # Load all available locales and makes the English the default
 I18n.load_path = Dir[ File.join('config','locales','*.yml') ]
@@ -33,29 +34,4 @@ ActiveRecord::Base.add_observer PersistenceObserver.instance
 
 
 # Sets the log file to be monitored
-file = File.open ARGV[0]
-
-# Main
-while true
-
-  # Return the last commited value (size / time)
-  fsize = ((c = Commit.last).nil? ? 0 : c.fsize)
-  mtime = ((c = Commit.last).nil? ? 0 : c.mtime)
-
-  sleep 1
-
-  # Commits only new contents to database
-  unless (file.mtime.to_i.eql?(mtime))
-
-    file.seek fsize
-    lines = file.each_line.take_while { |l| l.match(/\n/) }
-    lines.map { |e| QuakeEntry.new(e) }
-
-    Commit.create ({
-      :fsize => lines.join.size + fsize,
-      :mtime => file.mtime.to_i
-    })
-
-  end
-
-end
+Q3DB::Main.run! File.open ARGV[0]
