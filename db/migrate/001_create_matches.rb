@@ -15,6 +15,7 @@ class CreateMatches < ActiveRecord::Migration
       t.integer :g_maxGameClients
       t.integer :capturelimit
       t.string :version
+      t.string :protocol
       t.string :com_protocol
       t.integer :g_gametype
       t.string :mapname
