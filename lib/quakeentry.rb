@@ -62,11 +62,11 @@ module Q3DB
         :weapon_id  => Weapon.where(:weapon => weapon_name, :id => weapon_id).first_or_create.id
       })
 
-      unless bots.push(world).include? score.killer.nickname or bots.include? score.killed.nickname
-        Stat.where(:nickname => score.killer.nickname).first_or_create.increment! :winnings
-        Stat.where(:nickname => score.killed.nickname).first_or_create.increment! :defeats
-      end
+      Stat.where(:nickname => score.killer.nickname).first_or_create.increment! :winnings unless
+      bots.push(world).include? score.killer.nickname or bots.include? score.killed.nickname
 
+      Stat.where(:nickname => score.killed.nickname).first_or_create.increment! :defeats  unless
+      bots.include?             score.killer.nickname or bots.include? score.killed.nickname
     end
 
     def create_chat( elapsed, message )
