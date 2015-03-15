@@ -74,10 +74,11 @@ module Q3DB
 
         if (message.start_with?(n))
           Chat.create ({
-            :elapsed  => to_quakeseconds(elapsed),
-            :match_id => Match.last.id,
-            :nickname => n,
-            :message  => message.split("#{n}: ", 2).last
+            :elapsed   => to_quakeseconds(elapsed),
+            :match_id  => Match.last.id,
+            :client_id => Client.where(:match_id => Match.last.id, :nickname => n).last.id,
+            :nickname  => n,
+            :message   => message.split("#{n}: ", 2).last
           })
           break
         end
