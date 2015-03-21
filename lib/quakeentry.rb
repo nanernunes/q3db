@@ -62,10 +62,10 @@ module Q3DB
         :weapon_id  => Weapon.where(:weapon => weapon_name, :id => weapon_id).first_or_create.id
       })
 
-      Stat.where(:nickname => score.killer.nickname).first_or_create.increment! :winnings unless
+      Stat.where(:nickname => score.killer.nickname).first_or_create.increment! :frags unless
       bots.push(world).include? score.killer.nickname or bots.include? score.killed.nickname
 
-      Stat.where(:nickname => score.killed.nickname).first_or_create.increment! :defeats  unless
+      Stat.where(:nickname => score.killed.nickname).first_or_create.increment! :kills unless
       bots.include?             score.killer.nickname or bots.include? score.killed.nickname
     end
 

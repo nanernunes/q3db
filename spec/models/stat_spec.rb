@@ -29,13 +29,13 @@ describe Stat do
     Stat.destroy_all
   end
 
-  it "should create stat to two players" do
+  it "should create stat for both players" do
     Q3DB::QuakeEntry.new ( '33:17 Kill: 1 0 0: NEWFEAR killed Peanut by MOD_SHOTGUN' )
     expect( Stat.count ).to be_eql 2
-    expect( Stat.where(:nickname => 'NEWFEAR').first.winnings ).to be_eql 1
-    expect( Stat.where(:nickname => 'NEWFEAR').first.defeats  ).to be_eql 0
-    expect( Stat.where(:nickname => 'Peanut' ).first.winnings ).to be_eql 0
-    expect( Stat.where(:nickname => 'Peanut' ).first.defeats  ).to be_eql 1
+    expect( Stat.where(:nickname => 'NEWFEAR').first.frags ).to be_eql 1
+    expect( Stat.where(:nickname => 'NEWFEAR').first.kills ).to be_eql 0
+    expect( Stat.where(:nickname => 'Peanut' ).first.frags ).to be_eql 0
+    expect( Stat.where(:nickname => 'Peanut' ).first.kills ).to be_eql 1
   end
 
   it "should not create a stat when kill bots" do
