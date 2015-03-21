@@ -51,7 +51,12 @@ describe Stat do
   it "should not create a stat called <world> when cratered" do
     Q3DB::QuakeEntry.new ( '5:20 Kill: 1022 0 16: <world> killed Peanut by MOD_LAVA' )
     expect( Stat.count ).to be_eql 1
-    expect( Stat.where(:nickname => "<world>").first ).to be_nil
+    expect( Stat.where(:nickname => '<world>').first ).to be_nil
+  end
+
+  it "should create a match stat for a player" do
+    Q3DB::QuakeEntry.new ( '0:08 ClientBegin: 1' )
+    expect( Stat.where(:nickname => 'NEWFEAR').first.matches ).to be_eql 1
   end
 
 end

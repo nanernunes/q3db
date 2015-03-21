@@ -28,15 +28,16 @@ module Q3DB
         when /(\d+:\d+)[ ]?ClientUserinfoChanged: (\d+) (.*\d)$/
           update_client $1, $2, $3
 
-        # 0:00 Item: 0 weapon_shotgun
-        when /(\d+:\d+)[ ]?Item: (\d+) (\w+)$/
-          create_supply $1, $2, $3
-
         # 0:00 ClientBegin: 0
         when /(\d+:\d+)[ ]?ClientBegin: (\d+)/
+          begin_client $1, $2
 
         # 0:00 ClientDisconnect: 0
         when /(\d+:\d+)[ ]?ClientDisconnect: (\d+)/
+
+        # 0:00 Item: 0 weapon_shotgun
+        when /(\d+:\d+)[ ]?Item: (\d+) (\w+)$/
+          create_supply $1, $2, $3
 
         # 3:52 score: 0  ping: 48  client: 2 ^9OVERFLOW^2-AF
         when /(\d+:\d+)[ ]?score: (\d+)  ping: (\d+)  client: (\d+) (.*)/
@@ -97,16 +98,20 @@ module Q3DB
     def update_client( elapsed, client_id, client_info )
       client_info = Hash[*client_info.split('\\')]
 
-      client = Client.update(
-        Client.where(:match_id => Match.last.id, :session_id => client_id).last.id, {
+      Client.update(Client.where(:match_id => Match.last.id, :session_id => client_id).last.id, {
           :elapsed    => to_quakeseconds(elapsed),
           :nickname   => client_info["n"],
           :model      => client_info["model"]
         }
       )
+    end
 
-      Stat.where(:nickname => client.nickname).first_or_create
-      .increment! :matches unless bots.include? client.nickname
+    def begin_client( elapsed, client_id )
+      client = Client.where(:match_id => Match.last.id, :session_id => client_id).last
+
+      unless client.nickname.nil? or bots.include? client.nickname
+        Stat.where(:nickname => client.nickname).first_or_create.increment! :matches
+      end
     end
 
     def create_supply( elapsed, client_id, item_name )
