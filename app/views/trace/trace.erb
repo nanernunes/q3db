@@ -1,4 +1,4 @@
-<% puts if joins.zero? %>
+<% puts if table.values.inject(:+).zero? %>
 <%= "\r#{I18n.t(:match)}: [ ".bold %>
 <%= I18n.t(:joins) %>: <%= joins.to_s.rjust(2, '0').green %> - 
 <%= I18n.t(:items) %>: <%= items.to_s.rjust(4, '0').blue %> - 
